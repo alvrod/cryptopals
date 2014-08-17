@@ -34,8 +34,8 @@ object FrequencyScore {
     '?' -> 8.5 // use as wildcard for all punctuation
   )
 
-  def getFrequency(hex: String): Double = {
-    val ascii = Convert.hexToAscii(hex)
+  def getFrequency(bytes: Array[Byte]): Double = {
+    val ascii = new String(bytes)
     ascii.foldLeft(0.0)((acc, item) =>
       acc + frequencyMap.getOrElse(item, 0.0)
     )
