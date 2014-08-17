@@ -13,4 +13,10 @@ object Combine {
     val expandedKey = Array.fill(input.length){ key }
     xor(input, expandedKey)
   }
+
+  def hammingDistance(b1: Array[Byte], b2: Array[Byte]): Int = {
+    Combine.xor(b1, b2)
+      .map(byte => Integer.bitCount(byte))
+      .sum
+  }
 }
