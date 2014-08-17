@@ -8,18 +8,20 @@ object SingleByteXor {
     Combine.singleByteXor(bytes, key)
   }
 
-  def break(bytes: Array[Byte]): Array[Byte] = {
+  def break(bytes: Array[Byte]): (Byte, Array[Byte]) = {
     val bestKey = (0 to 256)
       .map(byte => (byte, decrypt(bytes, byte.toByte)))
       .map { case (key, candidate) => (key, FrequencyScore.getFrequency(candidate)) }
       .maxBy { case (key, score) => score }
-    decrypt(bytes, bestKey._1.toByte)
+    val foundKey = bestKey._1.toByte
+    (foundKey, decrypt(bytes, foundKey))
   }
 
   def detect(lines: Iterator[String]): Array[Byte] = {
     lines
       .map(line => break(Convert.hexToBytes(line)))
-      .map(candidate => (candidate, FrequencyScore.getFrequency(candidate)))
-      .maxBy { case (candidate, score) => score }._1
+      .map(candidate => (candidate._2, FrequencyScore.getFrequency(candidate._2)))
+      .maxBy { case (candidate, score) => score }
+      ._1
   }
 }
