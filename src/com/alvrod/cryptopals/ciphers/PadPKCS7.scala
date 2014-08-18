@@ -17,4 +17,8 @@ object PadPKCS7 {
 
     input ++ padBytes
   }
+
+  def unpadPkcs7(padded: Array[Byte]): Array[Byte] = {
+    padded.dropRight(padded.last)
+  }
 }
