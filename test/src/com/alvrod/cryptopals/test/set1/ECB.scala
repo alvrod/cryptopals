@@ -18,4 +18,11 @@ class ECB extends FunSuite {
     val plaintextBytes = AES.decryptECB(ciphertext, "YELLOW SUBMARINE".getBytes)
     println(new String(plaintextBytes))
   }
+
+  test("Detect ECB") {
+    val source = Source.fromURL("http://cryptopals.com/static/challenge-data/8.txt")
+    val hexLines = source.getLines()
+    val ecb = AES.detectECB(hexLines)
+    println(ecb)
+  }
 }
