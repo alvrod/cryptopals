@@ -1,6 +1,7 @@
 package com.alvrod.cryptopals.test.set1
 
 import com.alvrod.cryptopals.Convert
+import com.alvrod.cryptopals.breakers.AesMode
 import com.alvrod.cryptopals.ciphers.{AES, RepeatingByteXor, SingleByteXor}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
@@ -22,7 +23,7 @@ class ECB extends FunSuite {
   test("Detect ECB") {
     val source = Source.fromURL("http://cryptopals.com/static/challenge-data/8.txt")
     val hexLines = source.getLines()
-    val ecb = AES.detectECB(hexLines)
+    val ecb = AesMode.detectECB(hexLines)
     println(ecb)
   }
 }
