@@ -1,7 +1,5 @@
 package com.alvrod.cryptopals.breakers
 
-import com.alvrod.cryptopals.Convert
-
 object FrequencyScore {
   val frequencyMap = Map[Char, Double] (
     'a' -> 8.167,

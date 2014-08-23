@@ -1,7 +1,7 @@
 package com.alvrod.cryptopals.ciphers
 
+import com.alvrod.cryptopals.Combine
 import com.alvrod.cryptopals.breakers.FrequencyScore
-import com.alvrod.cryptopals.{Combine, Convert}
 
 object RepeatingByteXor {
   def encrypt(bytes: Array[Byte], key: Array[Byte]): Array[Byte] = {

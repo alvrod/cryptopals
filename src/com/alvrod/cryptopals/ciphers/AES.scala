@@ -11,6 +11,8 @@ import scala.util.Random
 
 object AES {
   val random = new Random()
+  val secretKey = generateKey()
+  val decoder = new sun.misc.BASE64Decoder()
 
   def encryptSecret(plaintext: Array[Byte]): (String, Array[Byte]) = {
     val key = generateKey()
@@ -24,6 +26,16 @@ object AES {
       random.nextBytes(iv)
       ("cbc", encryptCBC(input, iv, key))
     }
+  }
+
+  // AES-128-ECB(your-string || unknown-string, random-key)
+  def encryptEcbSecretKey(plaintext: Array[Byte]): Array[Byte] = {
+    val key = secretKey
+    val appendTextBase64 = "Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK"
+    val appendBytes = decoder.decodeBuffer(appendTextBase64) // the "unknown string"
+
+    val input = plaintext ++ appendBytes
+    encryptECB(input, key)
   }
 
   def encryptECB(bytes: Array[Byte], key: Array[Byte]): Array[Byte] = {
