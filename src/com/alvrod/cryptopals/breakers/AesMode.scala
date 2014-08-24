@@ -48,7 +48,7 @@ object AesMode {
     // get the ciphertexts for AAAAAAA?, where ? = a, b, c, ...
     // indexed by ciphertext
     def findMatchingBlock(block: Array[Byte], searchBlock: Array[Byte]): Char = {
-      val almostBlock = block//.drop(1)
+      val almostBlock = block
       val found = (Byte.MinValue to Byte.MaxValue)
         .map(byte => {
           val plaintext = almostBlock ++ Array(byte.toByte)
