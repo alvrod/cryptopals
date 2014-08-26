@@ -16,4 +16,13 @@ object Profile {
   def apply(email: String): Profile = {
     new Profile(email, 10, "user")
   }
+
+  def fromEncoded(encoded: String): Profile = {
+    val values = ParsingUtil.parseKvEncoded(encoded)
+    new Profile(
+      values.getOrElse("email", ""),
+      Integer.parseInt(values.getOrElse("uid", "0")),
+      values.getOrElse("role", "")
+    )
+  }
 }
