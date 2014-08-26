@@ -4,7 +4,7 @@ import com.alvrod.cryptopals.ciphers.AES
 import AES.secretKey
 
 object AuthService {
-  def getUserProfile(email: String): Array[Byte] = {
+  def profileFor(email: String): Array[Byte] = {
     val profile = Profile(email)
     val encodedProfile = profile.encode
     AES.encryptECB(encodedProfile.getBytes, secretKey)

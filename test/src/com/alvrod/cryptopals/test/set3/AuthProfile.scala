@@ -1,5 +1,5 @@
 package com.alvrod.cryptopals.test.set3
-import com.alvrod.cryptopals.breakers.AesMode
+import com.alvrod.cryptopals.breakers.{EcbProfile, AesMode}
 import com.alvrod.cryptopals.ciphers.AES
 import com.alvrod.cryptopals.web.{AuthService, Profile, ParsingUtil}
 import org.junit.runner.RunWith
@@ -17,10 +17,19 @@ class AuthProfile extends FunSuite {
   }
 
   test("Create, encrypt, decrypt") {
-    val encryptedProfile = AuthService.getUserProfile("me@my.domain.com")
+    val encryptedProfile = AuthService.profileFor("me@my.domain.com")
     val profile = AuthService.openUserProfile(encryptedProfile)
     expectResult("user") {profile.role}
     expectResult("me@my.domain.com") {profile.email}
+    expectResult(10) {profile.uid}
+  }
+
+  test("Turn user into admin") {
+    val adminCipher = EcbProfile.breakCookie
+
+    val profile = AuthService.openUserProfile(adminCipher)
+    expectResult("admin") {profile.role}
+    expectResult("XXXXXXXXXXXXX") {profile.email}
     expectResult(10) {profile.uid}
   }
 }
