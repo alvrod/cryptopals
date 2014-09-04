@@ -38,6 +38,20 @@ object AES {
     encryptECB(input, key)
   }
 
+  // AES-128-ECB(random bytes || your-string || unknown-string, random-key)
+  def encryptEcbSecretKeyWithRandomStart(plaintext: Array[Byte]): Array[Byte] = {
+    val key = secretKey
+    val appendTextBase64 = "Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBjYW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBoaQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK"
+    val appendBytes = decoder.decodeBuffer(appendTextBase64) // the "unknown string"
+
+    val randomCount = random.nextInt(500)
+    val randomBytes = new Array[Byte](randomCount)
+    random.nextBytes(randomBytes)
+
+    val input = randomBytes ++ plaintext ++ appendBytes
+    encryptECB(input, key)
+  }
+
   def encryptECB(bytes: Array[Byte], key: Array[Byte]): Array[Byte] = {
     val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
     cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "AES"))
