@@ -1,7 +1,7 @@
-package com.alvrod.cryptopals.test.set3
-import com.alvrod.cryptopals.breakers.{EcbProfile, AesMode}
-import com.alvrod.cryptopals.ciphers.AES
-import com.alvrod.cryptopals.web.{AuthService, Profile, ParsingUtil}
+package com.alvrod.cryptopals.test.set2
+
+import com.alvrod.cryptopals.breakers.EcbProfile
+import com.alvrod.cryptopals.web.{AuthService, Profile}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner

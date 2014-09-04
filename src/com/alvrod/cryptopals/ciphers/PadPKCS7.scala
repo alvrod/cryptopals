@@ -19,6 +19,10 @@ object PadPKCS7 {
   }
 
   def unpadPkcs7(padded: Array[Byte]): Array[Byte] = {
-    padded.dropRight(padded.last)
+    val mark = padded.last
+    if (!padded.takeRight(mark).forall(m => m == mark)) {
+      throw new IllegalArgumentException("Bad padding")
+    }
+    padded.dropRight(mark)
   }
 }

@@ -1,4 +1,4 @@
-package com.alvrod.cryptopals.test.set3
+package com.alvrod.cryptopals.test.set2
 
 import com.alvrod.cryptopals.Euclid
 import com.alvrod.cryptopals.breakers.AesMode

@@ -1,6 +1,5 @@
-package com.alvrod.cryptopals.test.set3
-import com.alvrod.cryptopals.breakers.AesMode
-import com.alvrod.cryptopals.ciphers.AES
+package com.alvrod.cryptopals.test.set2
+
 import com.alvrod.cryptopals.web.ParsingUtil
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
