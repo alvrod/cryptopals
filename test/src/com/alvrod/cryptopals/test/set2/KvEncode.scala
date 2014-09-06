@@ -1,5 +1,6 @@
 package com.alvrod.cryptopals.test.set2
 
+import com.alvrod.cryptopals.breakers.BitFlipper
 import com.alvrod.cryptopals.web.ParsingUtil
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
@@ -19,5 +20,11 @@ class KvEncode extends FunSuite {
     val encoded = "foo=bar&baz=qux&zap=zazzle"
     val mapped = ParsingUtil.parseKvEncoded(encoded)
     expectResult(encoded) { ParsingUtil.encodeKv(mapped) }
+  }
+
+  test ("The function should quote out the ; and = characters.") {
+    val input = "key=value;otherKey=otherValue;rest="
+    val quoted = ParsingUtil.quoteOut(input, Array(';', '='))
+    expectResult("""key"="value";"otherKey"="otherValue";"rest"="""") { quoted }
   }
 }

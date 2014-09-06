@@ -3,6 +3,7 @@ package com.alvrod.cryptopals.ciphers
 import javax.crypto.{KeyGenerator, Cipher}
 import javax.crypto.spec.SecretKeySpec
 
+import com.alvrod.cryptopals.web.ParsingUtil
 import com.alvrod.cryptopals.{Combine, Convert}
 import com.alvrod.cryptopals.breakers.RepetitionScore
 
@@ -80,6 +81,16 @@ object AES {
     val gen = KeyGenerator.getInstance("AES")
     gen.init(128)
     gen.generateKey().getEncoded
+  }
+
+  def encryptCbcBitflipping(userInput: String): (Array[Byte], Array[Byte]) = {
+    val plaintext =
+      "comment1=cooking%20MCs;userdata=" +
+      ParsingUtil.quoteOut(userInput, Array(';', '=')) +
+      ";comment2=%20like%20a%20pound%20of%20bacon="
+    val iv = Array.fill[Byte](16) {0x0}
+    random.nextBytes(iv)
+    (encryptCBC(plaintext.getBytes, iv, secretKey), iv)
   }
 
   def encryptCBC(bytes: Array[Byte], iv: Array[Byte], key: Array[Byte]): Array[Byte] = {

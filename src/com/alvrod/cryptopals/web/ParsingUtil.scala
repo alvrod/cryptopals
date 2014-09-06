@@ -14,4 +14,12 @@ object ParsingUtil {
       .map { case (key, value) => s"$key=$value"}
       .mkString("&")
   }
+
+  def quoteOut(input: String, quotables: Array[Char]): String = {
+    var result: String = input
+    for (quote <- quotables) {
+      result = result.replaceAll(quote.toString, "\"" + quote + "\"")
+    }
+    result
+  }
 }
